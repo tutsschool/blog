@@ -1,0 +1,86 @@
+<h2>PUBLICAR POSTAGEM</h2>
+<?php
+    $forms = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    if(isset($forms['acao']) && $forms['acao']=='publicar'):
+        unset($forms['acao']);
+        
+        $forms['post_userid'] = $user['user_id'];
+        $forms['post_url'] = urlTitle($forms['post_title']);
+        $forms['post_views'] = 1;
+        $forms['post_data'] = date('Y-m-d');
+        
+        $imagem = $_FILES['post_imagem'];
+        
+        if($forms['post_title'] == ''):
+            SYSErro("Informe o titulo do post !", SYS_ALERT);
+        elseif($forms['post_category'] == ''):
+            SYSErro("Selecione uma categoria !", SYS_ALERT);
+        elseif(empty($imagem['name'])):
+            SYSErro("Selecione uma imagem de destaque !", SYS_ALERT);
+        elseif($forms['post_content'] == ''):
+            SYSErro("Precisamos de um bom conteudo para este post!", SYS_ALERT);
+        else:
+            $tmp = $imagem['tmp_name'];
+            $name = explode('.', $imagem['name']);
+            $forms['post_imagem'] = $forms['post_url'].'-'.time().'.'.end($name);
+            
+            $Campos = implode(',', array_keys($forms));
+            $Values = "'".implode("','", array_values($forms))."'";
+
+            $create = conectar()->prepare("INSERT INTO posts ({$Campos}) VALUES ({$Values})");
+            
+            try {
+                if($create->execute()){
+                    if(move_uploaded_file($tmp, '../uploads/posts/'.$forms['post_imagem']))
+                    {
+                        SYSErro("A postagem foi cadastrada com sucesso !", SYS_SUCCESS);
+                    }
+                }
+            } catch (PDOException $e) {
+                SYSErro($e->getMessage(), SYS_ERROR);
+            }
+            
+        endif;
+        
+    endif;
+?>
+<form action="" method="post" enctype="multipart/form-data">
+    <label>
+        <span>Titulo do post : </span>
+        <input type="text" name="post_title"/>
+    </label>
+    
+    <label>
+        <span>Categoria : </span>
+        <select name="post_category">
+            <option value="">selecionar categoria</option>
+            <?php
+                $cats = conectar()->prepare("SELECT * FROM categorias ORDER BY cat_id DESC");
+                $cats->execute();
+                $cats->setFetchMode(PDO::FETCH_ASSOC);
+                if($cats->rowCount() >= 1):
+                   foreach($cats->fetchAll() as $category):
+                        echo '<option value="'.$category['cat_url'].'">'.$category['cat_name'].'</option>';
+                   endforeach;
+                endif;
+            ?>
+        </select>
+    </label>
+    
+    <label>
+        <span>Selecionar capa : </span>
+        <input type="file" name="post_imagem"/>
+    </label>
+    
+    <label>
+        <span>Conteudo do post : </span>
+        <textarea name="post_content" rows="10"></textarea>
+    </label>
+    
+    <label>
+        <input type="text" disabled="disabled" name="post_data" value="<?= date("Y-m-d"); ?>"/>
+    </label>
+    
+    <input type="hidden" name="acao" value="publicar"/>
+    <input type="submit" value="cadastrar post" class="btn btn-alert"/>
+</form>

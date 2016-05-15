@@ -10,8 +10,8 @@ body{ background: #ddd; font-family: Arial, Helvetica, Sans-serif; }
 .header-title{ display: block; margin-bottom: 15px; padding: 10px 0; border-bottom: 1px solid #ddd; }
 .header-title h2{ display: block; font-size: 2em; text-transform: uppercase; color: #777; }
 
-.msg{ float: left; margin:10px 0; display: block; width: 100%; color: white; font-size: 0.98em; text-transform: uppercase; padding: 2px; }
+.msg{ float: left; margin:10px 0; display: block; width: 100%; color: white; font-size: 0.98em; padding: 2px; }
 .msg p{ display: block; padding: 10px 0; text-align: center; }
 .msg .success{ background: #37BD37; }
 .msg .alert{ background: #09f;}
-.msg .erro{ background: #a00;}
+.msg .error{ background: #a00;}

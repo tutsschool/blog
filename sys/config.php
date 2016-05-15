@@ -1,9 +1,9 @@
 <?php
-	define("BASE", "http://localhost/blog");
+	define("BASE", "http://localhost:8080/blog");
 	define("DB_HOST", "localhost");
 	define("DB_USER", "root");
 	define("DB_PASS", "");
-	define("DB_NAME", "tutsschool");
+	define("DB_NAME", "blog");
 
 	define("SYS_ERROR", 'error');
 	define("SYS_ALERT", 'alert');
@@ -35,6 +35,12 @@
 		return $pdo;
 	}
         
-    conectar();
+    function printCode($code, $tipoDebug = false)
+    {   
+        echo '<pre style="display:block; padding:10px; font-size:1.5em; border:1px solid #ddd; color:#444; margin:10px; border-radius:10px;">';
+        (!$tipoDebug ? print_r($code) : var_dump($code));
+        echo '</pre>';
+    }
+    //conectar();
 
 	

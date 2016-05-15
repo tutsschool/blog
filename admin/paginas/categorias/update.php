@@ -13,7 +13,7 @@
 		elseif($forms['cat_desc'] == ''):
 			SYSErro('Informe a descrição da categoria !', SYS_ALERT);
 		else:
-			echo $campos = implode('=?,', array_keys($forms))."=?";
+			$campos = implode('=?,', array_keys($forms))."=?";
 			$values = array_values($forms);
 			$values[] = $catId;
 			$update = conectar()->prepare("UPDATE categorias SET {$campos} WHERE cat_id=?");

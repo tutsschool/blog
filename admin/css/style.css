@@ -11,7 +11,7 @@ a{ text-decoration: none;}
 #sidebar .widget .userlogado{ float: left; width: 100%; display: block; padding: 10px 0; color: white; font-size: 1em; padding-bottom: 10px; border-bottom: 1px solid #273448; margin-bottom: 10px;}
 #sidebar .widget .sair{ color: yellow; float: right;}
 
-#content{ float: left; padding: 30px; height: 900px; background: white; width: 720px; }
+#content{ float: left; padding: 30px; background: white; width: 720px; }
 #content h2{ display: block; padding: 10px 0; font-size: 1.4em; text-transform: uppercase; font-weight: 800; color: #777; border-bottom: 2px solid #777; }
 #content li{ float: left; display: block; padding: 0px; width: 100%; background: #f4f4f4; margin: 5px 0; }
 #content .texto{ float: left; width: 100%;border-bottom: 1px solid #ddd; }
@@ -21,6 +21,7 @@ a{ text-decoration: none;}
 #content .botoes .delete{ background: red; }
 #content .botoes .ver{ color: #09f; }
 #content .botoes .editar{ color: green; }
+
 form label{ display: block; margin:20px 0; }
 form label span{ display: block; font-size: 1em; color: #777; text-transform: uppercase; padding: 10px 0; }
-form label input,form label textarea{ display: block; padding: 10px 0; color: #999; font-size: 1em; text-indent: 10px; border: 4px solid #ccc; box-sizing: border-box; width: 100%; }
+form label input,form label select,form label textarea{ display: block; padding: 10px 0; color: #999; font-size: 1em; text-indent: 10px; border: 4px solid #ccc; box-sizing: border-box; width: 100%; }

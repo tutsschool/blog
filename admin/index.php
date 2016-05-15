@@ -30,7 +30,7 @@
         <div id="sidebar">
             <a href="<?= BASE ?>/admin/index.php?exe=home/index"><h1>PAINEL</h1></a>
             <div class="widget">
-                <p class="userlogado">Olá, <b><?= $user['user_name']; ?></b>, bem vindo ! 
+                <p class="userlogado">Olá <b><?= $user['user_name']; ?></b>, bem vindo ! 
                     <a href="index.php?sair=true" class="sair">[ Logout ]</a></p>
             </div>
             <div class="widget">
