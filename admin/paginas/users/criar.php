@@ -4,11 +4,11 @@
 	if(isset($forms['acao']) && $forms['acao'] == 'criar'):
 		unset($forms['acao']);
 
-		$read = conectar()->prepare("SELECT * FROM usuarios WHERE user_email=:email LIMIT 1");
-		$read->bindValue(':email', $forms['user_email'], PDO::PARAM_STR);
-		$read->execute();
+		$usuario = conectar()->prepare("SELECT * FROM usuarios WHERE user_email=:email LIMIT 1");
+		$usuario->bindValue(':email', $forms['user_email'], PDO::PARAM_STR);
+		$usuario->execute();
 
-		$contarUsuario = $read->rowCount();
+		$contarUsuario = $usuario->rowCount();
 
 		if($forms['user_name'] == ''):
 			SYSErro('Informe o nome do usuario !', SYS_ALERT);
@@ -17,7 +17,7 @@
 		elseif($forms['user_email'] == ''):
 			SYSErro('Informe o email do usuario !', SYS_ALERT);
 		elseif($contarUsuario >= 1):
-			SYSErro('O usuario ja esta cadastrado no banco de dados !', SYS_ALERT);
+			SYSErro('O email ja esta sendo usado no sistema!', SYS_ALERT);
 		elseif($forms['user_password'] == ''):
 			SYSErro('Informe a senha do usuario !', SYS_ALERT);
 		else:
@@ -35,8 +35,6 @@
 			} catch (PDOException $e) {
 				SYSErro($e->getMessage(), SYS_ERROR);
 			}
-
-			echo $Keys;
 		endif;
 	endif;
 ?>
