@@ -1,5 +1,5 @@
 <?php
-	define("BASE", "http://localhost:8080/blog");
+	define("BASE", "http://localhost/blog");
 	define("DB_HOST", "localhost");
 	define("DB_USER", "root");
 	define("DB_PASS", "");

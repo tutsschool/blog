@@ -15,7 +15,7 @@ a{ text-decoration: none;}
 #content h2{ display: block; padding: 10px 0; font-size: 1.4em; text-transform: uppercase; font-weight: 800; color: #777; border-bottom: 2px solid #777; }
 #content li{ float: left; display: block; padding: 0px; width: 100%; background: #f4f4f4; margin: 5px 0; }
 #content .texto{ float: left; width: 100%;border-bottom: 1px solid #ddd; }
-#content .texto p{ display: block; padding: 15px 0; text-indent: 15px; }
+#content .texto p{ display: block; color: #444; padding: 15px 0; text-indent: 15px; }
 #content .botoes{ float: left; width: 100%; padding: 4px 0; }
 #content .botoes a{ float: right; font-size: 0.8em; color: white; text-transform: uppercase; margin: 10px; display: block; padding: 5px 10px; }
 #content .botoes .delete{ background: red; }
