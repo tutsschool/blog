@@ -7,7 +7,16 @@
                 </div><!-- logo -->
 
                 <div class="search">
-                        <form action="<?= BASE; ?>/pesquisa" method="post">
+                        <?php
+                                if(isset($_POST['acao']) && $_POST['acao']=='buscar'):
+                                        $pesquisa = filter_input(INPUT_POST, 'url');
+                                        if($pesquisa != ''):
+                                                $pesquisa = urlTitle($pesquisa);
+                                                header('Location: '.BASE.'/pesquisa/'.$pesquisa);
+                                        endif;
+                                endif;
+                        ?>
+                        <form action="" method="post">
                                 <input type="text" name="url">
                                 <input type="hidden" name="acao" value="buscar">
                                 <input type="submit" value="procurar"/>

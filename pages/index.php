@@ -1,17 +1,58 @@
 <section id="posts">
-        <?php for($i = 0; $i < 10; $i++): ?>
+        <?php
+                $page = (isset($_GET['page']) && $_GET['page'] != '' && $_GET['page'] != 0 ? $_GET['page'] : 1);
+                $inicio = ($page - 1);
+                $maximo = 1;
+                $selecionarPosts = conectar()->prepare("SELECT * FROM posts ORDER BY post_id DESC LIMIT $inicio, $maximo");
+                $selecionarPosts->execute();
+
+                $selecionarPosts->setFetchMode(PDO::FETCH_ASSOC);
+
+                if($selecionarPosts->rowCount() >= 1):
+                        foreach($selecionarPosts->fetchAll() as $posts):
+                                $home = BASE.'/artigo/'.$posts['post_category'].'/'.$posts['post_url'];
+               
+        ?>  
         <article class="lia">
                 <header>
-                        <a href="#"><h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo aspernatur error dolore cum voluptate similique </h2></a>
+                        <a href="<?= $home; ?>">
+                                <h2><?= $posts['post_title']; ?></h2>
+                        </a>
                 </header>
 
                 <div class="img">
-                        <a href="">
-                                <img src="http://rdtpop.com/wp-content/uploads/2015/06/kunfu.jpg" title="" alt="">
+                        <a href="<?= $home; ?>">
+                                <img src="<?=  getImagem('posts/'.$posts['post_imagem']); ?>"
+                                title="<?= $posts['post_title']; ?>" alt="<?= $posts['post_title']; ?>">
                         </a>
                 </div>
-                <a href="#" class="read-more">LEIA MAIS</a>
+                <a href="<?= $home; ?>" class="read-more">LEIA MAIS</a>
         </article>
-        <?php endfor;?>
-</section><!-- posts -->
-<?php include 'inc/sidebar.inc.php'; ?>
+                <?php 
+                                endforeach;
+                        else:
+                                echo 'Nenhum post foi encontrado';
+                        endif;
+               
+
+                $paganator = conectar()->prepare("SELECT * FROM posts ORDER BY post_id DESC");
+                $paganator->execute();
+
+                $total = ceil($paganator->rowCount() / $maximo) - $paganator->rowCount();
+                $anterior = $page - 1;
+                $proximo = $page + 1;
+
+                if($anterior <= 1):
+                        echo '<a href="?page='.$proximo.'">proximo</a>';
+                endif;  
+
+                if($proximo >= $total && $anterior != 0):
+                        if($page <= $paganator->rowCount()):
+                                echo '<a href="?page='.$anterior.'">anterior</a>';
+                        endif;
+                endif;
+
+                ?>
+
+        </section><!-- posts -->
+        <?php include 'inc/sidebar.inc.php'; ?>

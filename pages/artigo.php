@@ -1,21 +1,46 @@
+<?php
+	$category = (isset($explode[1]) && $explode[1] != '' ? $explode[1] : '');
+	$url = (isset($explode[2]) && $explode[2] != '' ? $explode[2] : '');
+	$selecionarArtigo = conectar()->prepare("SELECT * FROM posts WHERE post_category=:category AND post_url=:url LIMIT 1");
+	$selecionarArtigo->bindValue(':category', $category, PDO::PARAM_STR);
+	$selecionarArtigo->bindValue(':url', $url, PDO::PARAM_STR);
+	$selecionarArtigo->execute();
+
+
+?>
 <section id="posts">
+				<?php
+					if($selecionarArtigo->rowCount() <= 0):
+						header('Location: '.BASE.'/404');
+					else:
+						foreach($selecionarArtigo->fetchAll() as $artigo);
+						$home = BASE.'/artigo/'.$artigo['post_category'].'/'.$artigo['post_url'];
+					endif;
+				?>
 				<article class="lia">
 					<header>
-						<a href="#"><h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo aspernatur error dolore cum voluptate similique quasi velit, beatae fuga accusantium illum tempore qui veritatis eos voluptatum id alias delectus adipisci.</h2></a>
+						<h2><?= $artigo['post_title']; ?></h2>
 					</header>
 					<div class="tags">
-						<span>Em : <b>00/00/0000</b> |</span>
-						<span>( 900 ) <b>visitas</b> |</span>
-						<span>categoria : <a href="#">categoria</a></span>
+						<span>Em : <b><?= date('d/m/Y', strtotime($artigo['post_data'])) ?></b> |</span>
+						<span>( <?= $artigo['post_views']; ?> ) <b>visitas</b> |</span>
+						<span>categoria : <a href="<?= BASE.'/categoria/'.$artigo['post_category']; ?>"><?= str_replace('-', ' ', $artigo['post_category']); ?></a></span>
 					</div>
 					<div class="img">
-						<a href="">
-							<img src="http://rdtpop.com/wp-content/uploads/2015/06/kunfu.jpg" title="" alt="">
-						</a>
+							<img src="<?=  getImagem('posts/'.$artigo['post_imagem']); ?>" title="" alt="">
 					</div>
 					<div class="conteudo">
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque minima, ex, similique assumenda corporis consequatur voluptate numquam provident? Dicta ut, doloremque. Minus dolore, neque ex at culpa iste beatae, maiores!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia quos sed, vitae nulla sunt neque itaque labore totam blanditiis? Deleniti repellendus aliquam repudiandae ipsa dolorem excepturi doloribus quisquam est voluptates.</p>
+						<p><?= $artigo['post_content']; ?></p>
 					</div>
 				</article>
 </section><!-- posts -->
-<?php include 'inc/sidebar.inc.php'; ?>
+      <?php include 'inc/sidebar.inc.php'; ?>
+
+<?php
+	$postId = $artigo['post_id'];
+	$u = (int) $artigo['post_views'] + 1;
+	$update = conectar()->prepare("UPDATE posts SET post_views=:views WHERE post_id=:id");
+	$update->bindValue(':views', $u, PDO::PARAM_INT);
+	$update->bindValue(':id', $postId, PDO::PARAM_INT);
+	$update->execute();
+?>

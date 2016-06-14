@@ -1,24 +1,31 @@
 <?php
+	//url base do site
 	define("BASE", "http://localhost/blog");
+
+	//configura o banco de dados
 	define("DB_HOST", "localhost");
 	define("DB_USER", "root");
 	define("DB_PASS", "");
 	define("DB_NAME", "blog");
 
+	//tipo de mensagem de erro
 	define("SYS_ERROR", 'error');
 	define("SYS_ALERT", 'alert');
 	define("SYS_SUCCESS", 'success');
 
+	//funcao que apresenta mensagems de erro na tela
 	function SYSErro($erro, $tipo)
 	{
 		echo "<div class=\"msg\"><p class=\"msg {$tipo}\">{$erro}</p></div>";
 	}
 
+	//cria url amigavel
 	function urlTitle($title)
 	{
 		return str_replace(' ', '-', trim($title));
 	}
 
+	//funcao usada para se conectar ao banco de dados
 	function conectar()
 	{
 		$pdo = null;
@@ -34,13 +41,20 @@
 		}
 		return $pdo;
 	}
-        
-    function printCode($code, $tipoDebug = false)
-    {   
-        echo '<pre style="display:block; padding:10px; font-size:1.5em; border:1px solid #ddd; color:#444; margin:10px; border-radius:10px;">';
-        (!$tipoDebug ? print_r($code) : var_dump($code));
-        echo '</pre>';
-    }
-    //conectar();
 
-	
+	//funcao responsavel por pegar a imagem correta dos posts
+	function getImagem($Imagem)
+	{
+		$retorno = null;
+		if(file_exists("uploads/{$Imagem}")):
+			$retorno = BASE."/uploads/{$Imagem}";
+		else:
+			$retorno = BASE."/uploads/default.png";
+		endif;
+		return $retorno;
+	}
+
+	function getPaginator($inico, $maximo, $anterior = 'prev', $proximo = 'next')
+	{
+		
+	}
