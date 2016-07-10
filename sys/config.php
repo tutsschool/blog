@@ -13,6 +13,9 @@
 	define("SYS_ALERT", 'alert');
 	define("SYS_SUCCESS", 'success');
 
+     define("SITENAME", "Blog Pro");
+     define("SITEDESC", "Criado totalmente usando php !");
+
 	//funcao que apresenta mensagems de erro na tela
 	function SYSErro($erro, $tipo)
 	{
@@ -46,15 +49,12 @@
 	function getImagem($Imagem)
 	{
 		$retorno = null;
-		if(file_exists("uploads/{$Imagem}")):
+		if($Imagem != '' && is_file("uploads/".$Imagem)):
 			$retorno = BASE."/uploads/{$Imagem}";
 		else:
-			$retorno = BASE."/uploads/default.png";
+			$retorno = BASE."/uploads/default.jpg";
 		endif;
 		return $retorno;
 	}
 
-	function getPaginator($inico, $maximo, $anterior = 'prev', $proximo = 'next')
-	{
-		
-	}
+	include 'funcoes.php';

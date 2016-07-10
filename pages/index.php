@@ -11,8 +11,8 @@
                 if($selecionarPosts->rowCount() >= 1):
                         foreach($selecionarPosts->fetchAll() as $posts):
                                 $home = BASE.'/artigo/'.$posts['post_category'].'/'.$posts['post_url'];
-               
-        ?>  
+                                $url_img = 'posts/'.$posts['post_imagem'];
+        ?>
         <article class="lia">
                 <header>
                         <a href="<?= $home; ?>">
@@ -22,18 +22,18 @@
 
                 <div class="img">
                         <a href="<?= $home; ?>">
-                                <img src="<?=  getImagem('posts/'.$posts['post_imagem']); ?>"
+                                <img src="<?= getImagem($url_img); ?>"
                                 title="<?= $posts['post_title']; ?>" alt="<?= $posts['post_title']; ?>">
                         </a>
                 </div>
                 <a href="<?= $home; ?>" class="read-more">LEIA MAIS</a>
         </article>
-                <?php 
+                <?php
                                 endforeach;
                         else:
                                 echo 'Nenhum post foi encontrado';
                         endif;
-               
+
 
                 $paganator = conectar()->prepare("SELECT * FROM posts ORDER BY post_id DESC");
                 $paganator->execute();
@@ -44,7 +44,7 @@
 
                 if($anterior <= 1):
                         echo '<a href="?page='.$proximo.'">proximo</a>';
-                endif;  
+                endif;
 
                 if($proximo >= $total && $anterior != 0):
                         if($page <= $paganator->rowCount()):

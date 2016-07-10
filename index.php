@@ -5,13 +5,14 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Blog do zero com php</title>
+	<title><?= get_title(); ?></title>
+     <meta name="description" content="<?= get_title(); ?>"/>
 	<link rel="stylesheet" href="<?= BASE; ?>/css/template.css"/>
 </head>
 <body>
         <?php
                 include 'pages/inc/header.inc.php';
-                
+
                 $url = filter_input(INPUT_GET, 'url');
 
                 $explode = explode('/', $url);
